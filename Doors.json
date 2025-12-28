@@ -1,0 +1,24 @@
+{
+    "Door1": {
+        "Location1": [
+            4,
+            1
+        ],
+        "Location2": [
+            6,
+            1
+        ],
+        "Locked": false
+    },
+    "Door2": {
+        "Location1": [
+            1,
+            1
+        ],
+        "Location2": [
+            4,
+            4
+        ],
+        "Locked": true
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "Treasure1": {
+        "Name": "Treasure1",
+        "Tresure": "rusty sword",
+        "RoomType": "Room1"
+    },
+    "Treasure2": {
+        "Name": "Treasure2",
+        "Tresure": "gold coin",
+        "RoomType": "Room2"
+    }
+}

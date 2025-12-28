@@ -1,0 +1,10 @@
+{
+    "Room1": {
+        "Name": "kitchen",
+        "Description": "This is a kitchen with a table and chairs."
+    },
+    "Room2": {
+        "Name": "corridor",
+        "Description": "This is a corridor leading to other rooms."
+    }
+}
