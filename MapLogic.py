@@ -1,4 +1,5 @@
 import csv
+import json
 
 def LoadMap(MapFileName):
     '''Loads Map From a CSV files'''
@@ -42,3 +43,36 @@ def DisplayMap(PlayerLocation, MapFileName):
         CurrentLocation[0]=CurrentLocation[0]+1
         CurrentLocation[1]=0
     return (" ".join(DisplayMap))
+
+
+def LoadRoomData():
+    '''Loads Room Data from a JSON file'''
+    try:
+        with open("Rooms.json","r") as RoomsFile:
+            RoomsData=json.load(RoomsFile)
+    except FileNotFoundError:
+        print("Rooms file not found")
+    except json.JSONDecodeError:
+        print("Error decoding JSON from Rooms file")
+    return RoomsData
+
+
+def RoomDescription(PlayerLocation, MapFileName):
+    '''Returns the description of the room the player is in'''
+    
+    Map=LoadMap(MapFileName)
+    RoomsData=LoadRoomData()
+    
+    try:
+        roomdata=Map[PlayerLocation[0]][PlayerLocation[1]]
+    except IndexError:
+        print("Player location is out of map bounds")
+        return
+    for room in RoomsData:
+        if roomdata.lower() == room.lower():
+            print(f"You are in {RoomsData[room]['Name']}")
+            print(RoomsData[room]['Description'])
+            return
+    print("You are in an undefined area")
+            
+

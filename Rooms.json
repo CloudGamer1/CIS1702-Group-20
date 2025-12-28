@@ -1,0 +1,10 @@
+{
+    "Room1": {
+        "Name": "Room 1",
+        "Description": "This is Room 1"
+    },
+    "Room2": {
+        "Name": "Room 2",
+        "Description": "This is Room 2"
+    }
+}
