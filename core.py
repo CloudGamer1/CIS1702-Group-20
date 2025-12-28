@@ -6,10 +6,9 @@ TreasureData=LoadTresureData()
 
 PlayerLocation=[1,1]
 
-#print(MoveUp(PlayerLocation))
 
 print(DisplayMap(PlayerLocation, MapSave))
-#RoomDescription(PlayerLocation, MapSave)
+
 
 while True:
     command=input("\n")
@@ -25,7 +24,8 @@ while True:
     if MapSave[PlayerLocation[0]][PlayerLocation[1]][:8].lower() == "treasure":
         print("You found a treasure!")
         treasure=GiveTreasure(TreasureData,MapSave[PlayerLocation[0]][PlayerLocation[1]])
-        print(f"You found treasure: {treasure}")
         #when player inventory gets added add the treasure to inventory here
-    
+        RoomType=RoomDescription(PlayerLocation, MapSave)[0]
+        MapSave[PlayerLocation[0]][PlayerLocation[1]]=RoomType
+            
     print(DisplayMap(PlayerLocation, MapSave))

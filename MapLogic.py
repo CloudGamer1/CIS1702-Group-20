@@ -79,7 +79,7 @@ def RoomDescription(PlayerLocation, MapSave):
     '''Returns the description of the room the player is in'''
     
     RoomsData=LoadRoomData()
-    
+
     try:
         roomdata=MapSave[PlayerLocation[0]][PlayerLocation[1]]
     except IndexError:
@@ -94,8 +94,7 @@ def RoomDescription(PlayerLocation, MapSave):
         
     for room in RoomsData:
         if roomdata.lower() == room.lower():
-            print(f"You are in {RoomsData[room]['Name']}")
-            print(RoomsData[room]['Description'])
-            return
+            data=[RoomsData[room]['Name'],RoomsData[room]['Description']]
+            return data
     print("You are in an undefined area")
 
