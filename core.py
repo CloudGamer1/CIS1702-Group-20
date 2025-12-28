@@ -2,6 +2,7 @@ from MapLogic import *
 from PlayerLogic import *
 
 MapSave=LoadMap("Game-Map.csv")
+print(MapSave[1][2])
 TreasureData=LoadTresureData()
 
 PlayerLocation=[1,1]
@@ -14,12 +15,12 @@ print(DisplayMap(PlayerLocation, MapSave))
 while True:
     command=input("\n")
     if command == "w":
-        PlayerLocation=MoveUp(PlayerLocation)
+        PlayerLocation=MoveUp(PlayerLocation,MapSave)
     elif command == "s":
-        PlayerLocation=MoveDown(PlayerLocation)
+        PlayerLocation=MoveDown(PlayerLocation,MapSave)
     elif command == "a":
-        PlayerLocation=MoveLeft(PlayerLocation)
+        PlayerLocation=MoveLeft(PlayerLocation,MapSave)
     elif command == "d":
-        PlayerLocation=MoveRight(PlayerLocation)
+        PlayerLocation=MoveRight(PlayerLocation,MapSave)
 
     print(DisplayMap(PlayerLocation, MapSave))
