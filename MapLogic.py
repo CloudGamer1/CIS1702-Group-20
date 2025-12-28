@@ -75,8 +75,6 @@ def GiveTreasure(TreasuresData,TreasureID):
             return TreasuresData[tresure]['Tresure']
         print("error finding treasure")
 
-
-
 def RoomDescription(PlayerLocation, MapSave):
     '''Returns the description of the room the player is in'''
     
