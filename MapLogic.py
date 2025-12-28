@@ -11,11 +11,10 @@ def LoadMap():
             Map.append(row)
     return Map
 
-
-def DisplayMap():
+def DisplayMap(PlayerLocation):
     '''Displays the map and the current player position'''
     MapSave=LoadMap()
-
+    CurrentLocation=[0,0]
     DisplayMap=[]
     RowLenght=len(MapSave[0])
 
@@ -23,13 +22,16 @@ def DisplayMap():
         location=0
         for J in I:
             location+=1
-            if J == "wall":
-                DisplayMap.append("----")
+            if CurrentLocation==PlayerLocation:
+                DisplayMap.append("  x  ")
+            elif J == "wall":
+                DisplayMap.append("-----")
             elif J != "wall" or J != "door":
-                DisplayMap.append("    ")
+                DisplayMap.append("     ")
+            
             if location >= RowLenght:
                 DisplayMap.append("\n")
-            
+            CurrentLocation[1]=CurrentLocation[1]+1
+        CurrentLocation[0]=CurrentLocation[0]+1
+        CurrentLocation[1]=0
     return (" ".join(DisplayMap))
-    
-    
