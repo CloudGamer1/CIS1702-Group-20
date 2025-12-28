@@ -33,7 +33,9 @@ def DisplayMap(PlayerLocation, MapSave):
                 DisplayMap.append("  x  ")
             elif J == "wall":
                 DisplayMap.append("-----")
-            elif J != "wall" or J != "door":
+            elif J[:4] == "door":
+                DisplayMap.append(" [ ] ")
+            else:
                 DisplayMap.append("     ")
             
             if location >= RowLenght:
@@ -65,6 +67,18 @@ def LoadTresureData():
         print("Error decoding JSON from Tresure file")
     
     return TresuresData
+
+def LoadDoorData():
+    '''Loads Door Data from a JSON file'''
+    try:
+        with open("Doors.json","r") as DoorsFile:
+            DoorsData=json.load(DoorsFile)
+    except FileNotFoundError:
+        print("Doors file not found")
+    except json.JSONDecodeError:
+        print("Error decoding JSON from Doors file")
+    
+    return DoorsData
 
 def GiveTreasure(TreasuresData,TreasureID):
     '''Gives the player the treasure'''
@@ -98,3 +112,47 @@ def RoomDescription(PlayerLocation, MapSave):
             return data
     print("You are in an undefined area")
 
+def UseDoor(PlayerLocation, MapSave, DoorData,lastcommand):
+    '''Uses a door to move to another location'''
+    door=MapSave[PlayerLocation[0]][PlayerLocation[1]]
+    for doorId in DoorData:
+        if doorId.lower() == door.lower():
+            if lastcommand=="w":
+                PlayerLocation[0]+=1
+            elif lastcommand=="s":
+                PlayerLocation[0]-=1
+            elif lastcommand=="a":
+                PlayerLocation[1]-=1
+            elif lastcommand=="d":
+                PlayerLocation[1]+=1
+            
+            if PlayerLocation == DoorData[doorId]['Location1']:
+                PlayerLocation=DoorData[doorId]['Location2']   
+            elif PlayerLocation == DoorData[doorId]['Location2']:
+                PlayerLocation=DoorData[doorId]['Location1']
+            else:
+                print("Error using door")
+
+    return PlayerLocation
+    
+def UpdateDoorFile():
+    
+    DoorData={
+        "Door1":{
+            "Location1":[5,1],
+            "Location2":[7,1],
+            "Locked":False #we cann add locking mechanics later
+        },
+        "Door2":{
+            "Location1":[1,1],
+            "Location2":[4,4],
+            "Locked":True
+        }
+    }
+    
+    '''Updates the door data file'''
+    try:
+        with open("Doors.json","w") as DoorsFile:
+            json.dump(DoorData,DoorsFile,indent=4)
+    except IOError:
+        print("Error writing to Doors file")

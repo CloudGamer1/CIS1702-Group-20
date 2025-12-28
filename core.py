@@ -3,9 +3,9 @@ from PlayerLogic import *
 
 MapSave=LoadMap("Game-Map.csv")
 TreasureData=LoadTresureData()
+DoorData=LoadDoorData()
 
 PlayerLocation=[1,1]
-
 
 print(DisplayMap(PlayerLocation, MapSave))
 
@@ -27,5 +27,9 @@ while True:
         #when player inventory gets added add the treasure to inventory here
         RoomType=RoomDescription(PlayerLocation, MapSave)[0]
         MapSave[PlayerLocation[0]][PlayerLocation[1]]=RoomType
-            
+    elif MapSave[PlayerLocation[0]][PlayerLocation[1]][:4].lower() == "door":
+        PlayerLocation=UseDoor(PlayerLocation, MapSave, DoorData,command)    
+        print(f"You are now in {RoomDescription(PlayerLocation, MapSave)[0]}")
+        
+        
     print(DisplayMap(PlayerLocation, MapSave))
