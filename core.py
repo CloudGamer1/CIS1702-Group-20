@@ -1,7 +1,9 @@
-import csv
 from MapLogic import *
+
+MapSave=LoadMap("Game-Map.csv")
+TreasureData=LoadTresureData()
 
 PlayerLocation=[2,2]
 
-print(DisplayMap(PlayerLocation, "Game-Map.csv"))
-RoomDescription(PlayerLocation, "Game-Map.csv")
+print(DisplayMap(PlayerLocation, MapSave))
+RoomDescription(PlayerLocation, MapSave)
