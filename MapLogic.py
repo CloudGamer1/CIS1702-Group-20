@@ -1,22 +1,29 @@
 import csv
 
-def LoadMap():
+def LoadMap(MapFileName):
     '''Loads Map From a CSV files'''
-    MapFileName="Game-Map.csv"
+    
+    MapFileName=MapFileName
 
-    with open(MapFileName,"r") as MapFile:
-        Reader=csv.reader(MapFile)
-        Map=[]
-        for row in Reader:
-            Map.append(row)
-    return Map
+    try:
+        with open(MapFileName,"r") as MapFile:
+            Reader=csv.reader(MapFile)
+            Map=[]
+            for row in Reader:
+                Map.append(row)
+        return Map
+    except FileNotFoundError:
+        print("Map file not found")
 
-def DisplayMap(PlayerLocation):
+def DisplayMap(PlayerLocation, MapFileName):
     '''Displays the map and the current player position'''
-    MapSave=LoadMap()
+    MapSave=LoadMap(MapFileName)
     CurrentLocation=[0,0]
     DisplayMap=[]
-    RowLenght=len(MapSave[0])
+    try:
+        RowLenght=len(MapSave[0])
+    except IndexError:
+        print("Map is empty")
 
     for I in MapSave:
         location=0
