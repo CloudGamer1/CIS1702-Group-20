@@ -1,0 +1,29 @@
+{
+    "coins": 0,
+    "items": [
+        {
+            "name": "rusty sword",
+            "value": 5,
+            "quantity": 0,
+            "type": "treasure"
+        },
+        {
+            "name": "gold coin",
+            "value": 10,
+            "quantity": 0,
+            "type": "treasure"
+        },
+        {
+            "name": "ruby",
+            "value": 30,
+            "quantity": 0,
+            "type": "treasure"
+        },
+        {
+            "name": "diamond",
+            "value": 100,
+            "quantity": 0,
+            "type": "treasure"
+        }
+    ]
+}
