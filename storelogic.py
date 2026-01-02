@@ -37,5 +37,3 @@ def sell_treasure(): #This is the main function to sell treasure items
 
     print(f"\nTotal coins earned: {total_coins_earned}") #This prints the total coins earned from the transaction
     print(f"Coins owned: {inventory['coins']}") #This prints the total coins owned after the transaction
-
-sell_treasure()
