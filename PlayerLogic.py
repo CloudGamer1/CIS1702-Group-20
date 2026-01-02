@@ -6,6 +6,14 @@ def MoveUp(PlayerLocation,map):
         print("You hit a wall! Can't move up.")
         PlayerLocation[0]+=1
         return PlayerLocation
+    elif map[PlayerLocation[0]][PlayerLocation[1]] == "Npc1":
+        print("Heres a Nutritious Meal!")
+        PlayerLocation[0]+=1
+        return PlayerLocation
+    elif map[PlayerLocation[0]][PlayerLocation[1]] == "Npc2":
+        print("U are attacked by a goblin!")
+        PlayerLocation[0]+=1
+        return PlayerLocation
     return PlayerLocation
 
 def MoveDown(PlayerLocation,map):
@@ -14,6 +22,14 @@ def MoveDown(PlayerLocation,map):
     PlayerLocation[0]+=1
     if map[PlayerLocation[0]][PlayerLocation[1]] == "wall":
         print("You hit a wall! Can't move down.")
+        PlayerLocation[0]-=1
+        return PlayerLocation
+    elif map[PlayerLocation[0]][PlayerLocation[1]] == "Npc1":
+        print("Heres a Nutritious Meal!")
+        PlayerLocation[0]-=1
+        return PlayerLocation
+    elif map[PlayerLocation[0]][PlayerLocation[1]] == "Npc2":
+        print("U are attacked by a goblin!")
         PlayerLocation[0]-=1
         return PlayerLocation
     return PlayerLocation
@@ -26,6 +42,14 @@ def MoveLeft(PlayerLocation,map):
         print("You hit a wall! Can't move left.")
         PlayerLocation[1]+=1
         return PlayerLocation
+    elif map[PlayerLocation[0]][PlayerLocation[1]] == "Npc1":
+        print("Heres a Nutritious Meal!")
+        PlayerLocation[1]+=1
+        return PlayerLocation
+    elif map[PlayerLocation[0]][PlayerLocation[1]] == "Npc2":
+        print("U are attacked by a goblin!")
+        PlayerLocation[1]+=1
+        return PlayerLocation
     return PlayerLocation
 
 def MoveRight(PlayerLocation,map):
@@ -34,6 +58,14 @@ def MoveRight(PlayerLocation,map):
     PlayerLocation[1]+=1
     if map[PlayerLocation[0]][PlayerLocation[1]] == "wall":
         print("You hit a wall! Can't move right.")
+        PlayerLocation[1]-=1
+        return PlayerLocation
+    elif map[PlayerLocation[0]][PlayerLocation[1]] == "Npc1":
+        print("Heres a Nutritious Meal!")
+        PlayerLocation[1]-=1
+        return PlayerLocation
+    elif map[PlayerLocation[0]][PlayerLocation[1]] == "Npc2":
+        print("U are attacked by a goblin!")
         PlayerLocation[1]-=1
         return PlayerLocation
     return PlayerLocation
