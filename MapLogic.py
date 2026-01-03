@@ -1,7 +1,6 @@
 import csv
 import json
-import colorama
-from colorama import Fore, Style
+
 
 
 def LoadMap(MapFileName):
@@ -41,7 +40,7 @@ def DisplayMap(PlayerLocation, MapSave):
             elif tile[:4] == "Npc1": 
                 DisplayMap.append(" 0-0 ")
             elif tile[:4] == "Npc2": 
-                DisplayMap.append(f" {Fore.GREEN}0V0{Style.RESET_ALL} ")
+                DisplayMap.append(f"0V0 ")
             else: 
                 DisplayMap.append("     ")
             
