@@ -1,6 +1,8 @@
 import csv
 import json
 
+
+
 def LoadMap(MapFileName):
     '''Loads Map From a CSV files'''
     
@@ -17,33 +19,37 @@ def LoadMap(MapFileName):
         print("Map file not found")
 
 def DisplayMap(PlayerLocation, MapSave):
-    '''Displays the map and the current player position'''
-    CurrentLocation=[0,0]
-    DisplayMap=[]
-    try:
-        RowLenght=len(MapSave[0])
-    except IndexError:
-        print("Map is empty")
+    '''Displays the map and the current player position''' 
+    rows = len(MapSave) 
+    columns = len(MapSave[0]) 
+    DisplayMap = [] 
+    
+    for r in range(rows): 
+        for c in range(columns): 
+            
+            if [r, c] == PlayerLocation: 
+                DisplayMap.append("  x  ") 
+                continue
+             
+            tile = MapSave[r][c] 
 
-    for I in MapSave:
-        location=0
-        for J in I:
-            location+=1
-            if CurrentLocation==PlayerLocation:
-                DisplayMap.append("  x  ")
-            elif J == "wall":
-                DisplayMap.append("-----")
-            elif J[:4] == "door":
-                DisplayMap.append(" [ ] ")
-            else:
+            if tile == "wall": 
+                DisplayMap.append("-----") 
+            elif tile[:4] == "door": 
+                DisplayMap.append(" [ ] ") 
+            elif tile[:4] == "Npc1": 
+                DisplayMap.append(" 0-0 ")
+            elif tile[:4] == "Npc2": 
+                DisplayMap.append(f"0V0 ")
+            else: 
                 DisplayMap.append("     ")
             
-            if location >= RowLenght:
-                DisplayMap.append("\n")
-            CurrentLocation[1]=CurrentLocation[1]+1
-        CurrentLocation[0]=CurrentLocation[0]+1
-        CurrentLocation[1]=0
-    return (" ".join(DisplayMap))
+        DisplayMap.append("\n") 
+    
+    
+    return "".join(DisplayMap)
+
+
 
 def LoadRoomData():
     '''Loads Room Data from a JSON file'''
@@ -55,6 +61,18 @@ def LoadRoomData():
     except json.JSONDecodeError:
         print("Error decoding JSON from Rooms file")
     return RoomsData
+
+def LoadNpcData():
+    '''Loads Npc Data from a JSON file'''
+    try:
+        with open("Npc.json","r") as NpcFile:
+            NpcData=json.load(NpcFile)
+    except FileNotFoundError:
+        print("Npc file not found")
+    except json.JSONDecodeError:
+        print("Error decoding JSON from Npc file")
+    
+    return NpcData
 
 def LoadTresureData():
     '''Loads Tresure Data from a JSON file'''
@@ -112,7 +130,7 @@ def RoomDescription(PlayerLocation, MapSave):
             return data
     print("You are in an undefined area")
 
-def UseDoor(PlayerLocation, MapSave, DoorData,lastcommand):
+def UseDoor(PlayerLocation, MapSave, DoorData, lastcommand, NpcLocations):
     '''Uses a door to move to another location'''
     door=MapSave[PlayerLocation[0]][PlayerLocation[1]]
     for doorId in DoorData:
@@ -127,12 +145,20 @@ def UseDoor(PlayerLocation, MapSave, DoorData,lastcommand):
                 PlayerLocation[1]+=1
             
             if PlayerLocation == DoorData[doorId]['Location1']:
+                origin = DoorData[doorId]['Location1']
                 PlayerLocation=DoorData[doorId]['Location2']   
             elif PlayerLocation == DoorData[doorId]['Location2']:
+                origin = DoorData[doorId]['Location2']
                 PlayerLocation=DoorData[doorId]['Location1']
             else:
                 print("Error using door")
-
+                return PlayerLocation
+        
+        for npc, info in NpcLocations.items(): #if npc blocks the door
+            if info["pos"] == PlayerLocation: 
+                print("Someone is standing here! You are pushed back through the door.") 
+                return origin
+        
     return PlayerLocation
     
 def UpdateDoorFile():
@@ -156,3 +182,4 @@ def UpdateDoorFile():
             json.dump(DoorData,DoorsFile,indent=4)
     except IOError:
         print("Error writing to Doors file")
+
