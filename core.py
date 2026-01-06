@@ -11,7 +11,7 @@ DoorData = LoadDoorData()
 Npcs = []
 NpcData = LoadNpcData()
 for i in NpcData:
-    Npcs.append(Npc(i))
+    Npcs.append(Npc(i, MapSave))
 
 
 NpcLocations = {}
@@ -31,7 +31,12 @@ print(DisplayMap(player.PlayerLocation, MapSave))
 while True:
     Used_door = False
     command = input("\n")
-    player.Move(command, MapSave)
+    player.Move(MapSave, command)
+
+    if MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:4].lower() == "door":
+        player.PlayerLocation = UseDoor(player.PlayerLocation, MapSave, DoorData, command, NpcLocations)
+        Used_door = True
+
 
     if (
         MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:4].lower()
@@ -40,11 +45,11 @@ while True:
         player.PlayerLocation = UseDoor(
             player.PlayerLocation, MapSave, DoorData, command, NpcLocations
         )
-        used_door = True
+        Used_door = True
 
     if not Used_door:  # Npc move only if the player did not use the door
-        for npc in NpcLocations:
-            Npc.MoveNpc(npc, NpcLocations, MapSave, NpcData, player.PlayerLocation)
+        for ai in Npcs:
+            ai.MoveNpc(MapSave, player.PlayerLocation)
 
     if (
         MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:8].lower()
