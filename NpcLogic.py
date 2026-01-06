@@ -1,30 +1,75 @@
 import random
 from PlayerLogic import *
 
-def MoveNpc(Npc_name, NpcLocations, MapSave, NpcData, PlayerLocation):
-    x, y = NpcLocations[Npc_name]["pos"]
-    under = NpcLocations[Npc_name]["under"]
+class Npc:
+    def __init__(self, name, NpcPos, MapSave, item,RoomType, Hostile):
+        self.name = name
+        self.NpcPosition = NpcPos
+        self.item = item
+        self.RoomType = RoomType
+        self.Hostile = Hostile
+        self.Npc_Health = 100
+        self.Npc_Health_Max = 100
+        self.Npc_Alive = True
+        self.tile = MapSave[self.NpcPosition[0]][self.NpcPosition[1]].lower()
 
+    def MoveNpc(self, NpcLocations, MapSave, NpcData, PlayerLocation):
+        direction = random.choice(["Up", "Down", "Left", "Right"])
+        if direction == "Up":
+            self.NpcPosition[0]-=1
+            if map[self.NpcPosition[0]][self.NpcPosition[1]] == "wall":
+                if self.Npc_Alive == True:
+                    self.CollideWall(direction,PlayerLocation)
+        elif direction == "Down":
+            self.NpcPosition[0]+=1
+            if map[self.NpcPosition[0]][self.NpcPosition[1]] == "wall":
+                if self.Npc_Alive == True:
+                    self.CollideWall(direction,PlayerLocation)
+        elif direction == "Left":
+            self.NpcPosition[1]-=1
+            if map[self.NpcPosition[0]][self.NpcPosition[1]] == "wall":
+                if self.Npc_Alive == True:
+                 self.CollideWall(direction,PlayerLocation)
+        elif direction == "Right":
+            self.NpcPosition[1]+=1 
+            if map[self.NpcPosition[0]][self.NpcPosition[1]] == "wall":
+                if self.Npc_Alive == True:
+                    self.CollideWall(direction,PlayerLocation)
+        self.tile = MapSave[self.NpcPosition[0]][self.NpcPosition[1]].lower()
 
-    direction = random.choice(["w", "a", "s", "d"])
-    
-    new_x, new_y = x, y
-    if direction == "w": new_x -= 1
-    elif direction == "s": new_x += 1
-    elif direction == "a": new_y -= 1
-    elif direction == "d": new_y += 1
-    
-    if [new_x, new_y] == PlayerLocation: 
-        return
-    
-    tile = MapSave[new_x][new_y].lower()
-    
-    # Npcs cannot walk through walls or other NPCs 
-    if tile == "wall" or tile.startswith("npc") or tile.startswith("door"): 
-        return 
-    
-    MapSave[x][y] = under 
-    NpcLocations[Npc_name]["under"] = MapSave[new_x][new_y]
+    def CollideWall(self,Movement_Angle,PlayerLocation):
+            if Movement_Angle == "Up":
+                self.Collide(Movement_Angle) # Collision detection
+            if Movement_Angle == "Left":
+                self.Collide(Movement_Angle)
+            if Movement_Angle == "Down":
+                self.Collide(Movement_Angle)
+            if Movement_Angle == "Right":
+                self.Collide(Movement_Angle)
+            if tile.startswith("door"):
+                return  # Npcs do not interact with doors
+            if [self.NpcPosition[0]][self.NpcPosition[1]] == PlayerLocation:
+                return
+        
+    def Collide(self,Movement_Angle):
+        if Movement_Angle == "Up": 
+            self.NpcLocation[0]+=1 # Moves npc back down 1 place in the y axis
+            return self.NpcLocation
+        if Movement_Angle == "Left":
+            self.NpcLocation[1]+=1 # Moves npc back down 1 place in the x axis                return self.NpcLocation
+            return self.NpcLocation
+        if Movement_Angle == "Down":
+            self.NpcLocation[0]-=1
+            return self.NpcLocation
+        if Movement_Angle == "Right":
+            self.NpcLocation[1]-=1
+            return self.NpcLocation
+        
+    def DamageNpc(self, damage): # Reduces the npc's health by the specified damage amount
+        self.Npc_Health -= damage
+        if self.Npc_Health < 0:
+            self.Npc_Health = 0
+        elif self.Npc_Health <= 0:
+            self.Npc_Alive = False
 
-    MapSave[new_x][new_y] = Npc_name
-    NpcLocations[Npc_name]["pos"] = [new_x, new_y]
+        

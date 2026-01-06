@@ -40,8 +40,9 @@ def DisplayMap(PlayerLocation, MapSave):
                 DisplayMap.append(" [ ] ") 
             elif tile[:4] == "Npc1": 
                 DisplayMap.append(" 0-0 ")
-            elif tile[:4] == "Npc2": 
-                DisplayMap.append(f"0V0 ")
+            elif tile[:4] == "Npc2":
+                if tile[:4] == "Npc2":
+                    DisplayMap.append("0V0 ")
             else: 
                 DisplayMap.append("     ")
             

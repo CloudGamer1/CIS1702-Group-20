@@ -1,8 +1,21 @@
+import random
 class Player():
     def __init__(self): # Initiallises the player class with a starting position and health
         self.Player_Health = 100
         self.Player_Max_Health = 100
         self.PlayerLocation = [1,1]
+
+    def Move(self,map,direction):
+        '''Moves the player in the specified direction on the map'''
+        
+        if direction == "w": # Specified what direction the player wants to move
+            return self.MoveUp(map) # Moves the player and returns the new position
+        elif direction == "s":
+            return self.MoveDown(map)
+        elif direction == "a":
+            return self.MoveLeft(map)
+        elif direction == "d":
+            return self.MoveRight(map)
 
     def MoveUp(self,map):
         '''Moves the player up one space on the map'''
@@ -84,16 +97,16 @@ class Player():
                 self.Collide(Movement_Angle)
         if Npc == "Npc2":
             if Movement_Angle == "Up":
-                print("You were attacked by a Goblin!")
+                print("You were attacked by a Goblin! It dealt 5 Damage.")
                 self.Collide(Movement_Angle)
         if Movement_Angle == "Left":
-                print("You were attacked by a Goblin!")
+                print("You were attacked by a Goblin! It dealt 5 Damage.")
                 self.Collide(Movement_Angle)
         if Movement_Angle == "Down":
-                print("You were attacked by a Goblin!")
+                print("You were attacked by a Goblin! It dealt 5 Damage.")
                 self.Collide(Movement_Angle)
         if Movement_Angle == "Right":
-                print("You were attacked by a Goblin!")
+                print("You were attacked by a Goblin! It dealt 5 Damage.")
                 self.Collide(Movement_Angle)
 
     def CollideWall(self,Movement_Angle):
@@ -123,6 +136,12 @@ class Player():
         if Movement_Angle == "Right":
             self.PlayerLocation[1]-=1
             return self.PlayerLocation
+
+    def DamagePlayer(self, damage): # Reduces the player's health by the specified damage amount
+        self.Player_Health -= damage
+        if self.Player_Health < 0:
+            self.Player_Health = 0
+        print(f"Player took {damage} damage! Current health: {self.Player_Health}")
 
 
 

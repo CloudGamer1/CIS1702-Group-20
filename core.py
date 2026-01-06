@@ -27,14 +27,7 @@ print(DisplayMap(player.PlayerLocation, MapSave))
 while True:
     Used_door = False
     command=input("\n")
-    if command == "w":
-        player.PlayerLocation=player.MoveUp(MapSave)
-    elif command == "s":
-        player.PlayerLocation=player.MoveDown(MapSave)
-    elif command == "a":
-        player.PlayerLocation=player.MoveLeft(MapSave)
-    elif command == "d":
-        player.PlayerLocation=player.MoveRight(MapSave)
+    player.Move(command, MapSave)
         
 
     if MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:4].lower() == "door": 
