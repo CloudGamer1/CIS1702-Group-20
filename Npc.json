@@ -12,7 +12,7 @@
         "Npc_Health_Max": 100
     },
     "Npc2": {
-        "Name": "Goblin",
+        "Name": "Boss",
         "Location1": [
             7,
             1
