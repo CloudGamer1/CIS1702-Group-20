@@ -29,9 +29,9 @@ def buy_menu(store, inventory):  # starts the function for the buy menu
         print(f"- {item}: {price} coins")  # prints each item and its price
 
     print("\nType the item name to buy it, or type 'back' to return.")
-    choice = input("> ")  # lets the user input their choice
+    choice = input("> ").lower()  # lets the user input their choice
 
-    if choice == "back":  # lets the user return to the main menu
+    if choice == "back".lower()  # lets the user return to the main menu
         return
 
     price = store.items_for_sale.get(choice)  # gets the price of the chosen item
@@ -151,3 +151,4 @@ def shop_main_menu(
             break
         else:
             print("Invalid choice.")
+
