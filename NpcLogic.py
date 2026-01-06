@@ -1,4 +1,5 @@
 import random
+from PlayerLogic import *
 
 def MoveNpc(Npc_name, NpcLocations, MapSave, NpcData, PlayerLocation):
     x, y = NpcLocations[Npc_name]["pos"]

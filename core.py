@@ -3,11 +3,12 @@ from PlayerLogic import *
 from NpcLogic import*
 
 MapSave=LoadMap("Game-Map.csv")
+player= Player()
 TreasureData=LoadTresureData()
 DoorData=LoadDoorData()
 NpcData=LoadNpcData()
 NpcLocations = {}
-PlayerLocation=[1,1]
+player.PlayerLocation=[1,1]
 
 for Npc_name, Npc_info in NpcData.items():
     if "Location1" in Npc_info:
@@ -20,41 +21,41 @@ for Npc_name, Npc_info in NpcData.items():
         MapSave[x][y] = Npc_name
 
 
-print(DisplayMap(PlayerLocation, MapSave))
+print(DisplayMap(player.PlayerLocation, MapSave))
 
 
 while True:
     Used_door = False
     command=input("\n")
     if command == "w":
-        PlayerLocation=MoveUp(PlayerLocation,MapSave)
+        player.PlayerLocation=player.MoveUp(MapSave)
     elif command == "s":
-        PlayerLocation=MoveDown(PlayerLocation,MapSave)
+        player.PlayerLocation=player.MoveDown(MapSave)
     elif command == "a":
-        PlayerLocation=MoveLeft(PlayerLocation,MapSave)
+        player.PlayerLocation=player.MoveLeft(MapSave)
     elif command == "d":
-        PlayerLocation=MoveRight(PlayerLocation,MapSave)
+        player.PlayerLocation=player.MoveRight(MapSave)
         
 
-    if MapSave[PlayerLocation[0]][PlayerLocation[1]][:4].lower() == "door": 
-        PlayerLocation = UseDoor(PlayerLocation, MapSave, DoorData, command, NpcLocations)  
+    if MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:4].lower() == "door": 
+        player.PlayerLocation = UseDoor(player.PlayerLocation, MapSave, DoorData, command, NpcLocations)  
         used_door = True 
     
     
     if not Used_door: #Npc move only if the player did not use the door
         for npc in NpcLocations: 
-            MoveNpc(npc, NpcLocations, MapSave, NpcData, PlayerLocation)
+            MoveNpc(npc, NpcLocations, MapSave, NpcData, player.PlayerLocation)
 
-    if MapSave[PlayerLocation[0]][PlayerLocation[1]][:8].lower() == "treasure":
+    if MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:8].lower() == "treasure":
         print("You found a treasure!")
-        treasure=GiveTreasure(TreasureData,MapSave[PlayerLocation[0]][PlayerLocation[1]])
+        treasure=GiveTreasure(TreasureData,MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]])
         #when player inventory gets added add the treasure to inventory here
-        RoomType=RoomDescription(PlayerLocation, MapSave)[0]
-        MapSave[PlayerLocation[0]][PlayerLocation[1]]=RoomType
-    elif MapSave[PlayerLocation[0]][PlayerLocation[1]][:4].lower() == "door":
-        PlayerLocation=UseDoor(PlayerLocation, MapSave, DoorData,command)    
-        print(f"You are now in {RoomDescription(PlayerLocation, MapSave)[0]}")
+        RoomType=RoomDescription(player.PlayerLocation, MapSave)[0]
+        MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]]=RoomType
+    elif MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:4].lower() == "door":
+        player.PlayerLocation=UseDoor(player.PlayerLocation, MapSave, DoorData,command)    
+        print(f"You are now in {RoomDescription(player.PlayerLocation, MapSave)[0]}")
         
         
         
-    print(DisplayMap(PlayerLocation, MapSave))
+    print(DisplayMap(player.PlayerLocation, MapSave))
