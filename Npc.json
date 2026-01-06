@@ -1,20 +1,26 @@
 {
     "Npc1": {
+        "Name": "Chef",
         "Location1": [
             3,
             1
         ],
-        "Name": "Chef",
         "Tresure": "Nutritious Meal",
-        "RoomType": "Room1"
+        "RoomType": "Room1",
+        "Hostile": false,
+        "Npc_Health": 100,
+        "Npc_Health_Max": 100
     },
     "Npc2": {
+        "Name": "Goblin",
         "Location1": [
             7,
             1
         ],
-        "Name": "Goblin",
         "Tresure": "Broken Dagger",
-        "RoomType": "Room2"
+        "RoomType": "Room2",
+        "Hostile": true,
+        "Npc_Health": 50,
+        "Npc_Health_Max": 50
     }
 }
