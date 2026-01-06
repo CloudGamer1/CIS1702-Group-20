@@ -13,6 +13,7 @@ Commands:
 - d         : moves right
 - inventory : opens inventory
 - store     : accesses store
+- quit      : quit
 =================
 """)
 
@@ -80,6 +81,8 @@ while Game ==True:
         show_help()
     elif command=="store":
         shop_main_menu()
+    elif command=="quit":
+        exit()
     else:
         print("Unknown command. Type 'help' for a list of commands.")
 
