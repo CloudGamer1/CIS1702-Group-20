@@ -98,15 +98,19 @@ class Player():
         if Npc == "Npc2":
             if Movement_Angle == "Up":
                 print("You were attacked by a Goblin! It dealt 5 Damage.")
+                self.DamagePlayer(5)
                 self.Collide(Movement_Angle)
         if Movement_Angle == "Left":
                 print("You were attacked by a Goblin! It dealt 5 Damage.")
+                self.DamagePlayer(5)
                 self.Collide(Movement_Angle)
         if Movement_Angle == "Down":
                 print("You were attacked by a Goblin! It dealt 5 Damage.")
+                self.DamagePlayer(5)
                 self.Collide(Movement_Angle)
         if Movement_Angle == "Right":
                 print("You were attacked by a Goblin! It dealt 5 Damage.")
+                self.DamagePlayer(5)
                 self.Collide(Movement_Angle)
 
     def CollideWall(self,Movement_Angle):
