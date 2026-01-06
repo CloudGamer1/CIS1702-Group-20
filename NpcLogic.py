@@ -52,6 +52,20 @@ class Npc:
         self.tile = MapSave[self.NpcPosition[0]][self.NpcPosition[1]].lower()
         return self.NpcPosition
 
+
+    def CollideWall(self,Movement_Angle,PlayerLocation):
+            if Movement_Angle == "Up":
+                self.Collide(Movement_Angle)
+            if Movement_Angle == "Right":
+                self.Collide(Movement_Angle)
+            if self.tile.startswith("door"):
+                return  # Npcs do not interact with doors
+            if self.NpcPosition == PlayerLocation:
+                if self.Hostile:
+                    self.DamageNpc(random.randint(5, 15))  # Player attacks Npc on collision
+                return
+
+
     def CollideWall(self,Movement_Angle,PlayerLocation):
             if Movement_Angle == "Up":
                 self.Collide(Movement_Angle) # Collision detection
@@ -89,4 +103,3 @@ class Npc:
             self.Npc_Health = 0
         elif self.Npc_Health <= 0:
             self.Npc_Alive = False
-

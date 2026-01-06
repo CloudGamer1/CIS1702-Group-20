@@ -26,12 +26,13 @@ for Npc_name, Npc_info in NpcData.items():
 
 
 print(DisplayMap(player.PlayerLocation, MapSave))
+print(f"Health: {player.Player_Health}/{player.Player_Max_Health}")
 
 with open("WinCondition.json", "r") as WinCondition_file:
     WinCondition = json.load(WinCondition_file)
 
-
-while True:
+Game = True
+while Game ==True:
     for NameNpcs in Npcs:
         if NameNpcs.Npc_Alive == False:
             MapSave[NameNpcs.NpcPosition[0]][
@@ -42,8 +43,25 @@ while True:
                 exit()
 
     Used_door = False
+    if player.Player_Health == 0:
+        
+        print("""⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⣶⡆⠀⣰⣿⠇⣾⡿⠛⠉⠁
+⠀⣠⣴⠾⠿⠿⠀⢀⣾⣿⣆⣀⣸⣿⣷⣾⣿⡿⢸⣿⠟⢓⠀⠀
+⣴⡟⠁⣀⣠⣤⠀⣼⣿⠾⣿⣻⣿⠃⠙⢫⣿⠃⣿⡿⠟⠛⠁⠀
+⢿⣝⣻⣿⡿⠋⠾⠟⠁⠀⠹⠟⠛⠀⠀⠈⠉⠀⠉⠀⠀⠀⠀⠀
+⠀⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⣀⢀⣠⣤⣴⣤⣄⠀
+⠀⠀⠀⠀⣀⣤⣤⢶⣤⠀⠀⢀⣴⢃⣿⠟⠋⢹⣿⣣⣴⡿⠋⠀
+⠀⠀⣰⣾⠟⠉⣿⡜⣿⡆⣴⡿⠁⣼⡿⠛⢃⣾⡿⠋⢻⣇⠀⠀
+⠀⠐⣿⡁⢀⣠⣿⡇⢹⣿⡿⠁⢠⣿⠷⠟⠻⠟⠀⠀⠈⠛⠀⠀
+⠀⠀⠙⠻⠿⠟⠋⠀⠀⠙⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀""")
+        Game = False
+        exit()
+        
     command = input("\n")
     player.Move(MapSave, command)
+    for ai in Npcs:
+        ai.MoveNpc(MapSave, player.PlayerLocation)
 
     if MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:4].lower() == "door":
         player.PlayerLocation = UseDoor(player.PlayerLocation, MapSave, DoorData, command, NpcLocations)
@@ -59,9 +77,6 @@ while True:
         )
         Used_door = True
 
-    if not Used_door:  # Npc move only if the player did not use the door
-        for ai in Npcs:
-            ai.MoveNpc(MapSave, player.PlayerLocation)
 
     if (
         MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:8].lower()
@@ -84,3 +99,4 @@ while True:
         print(f"You are now in {RoomDescription(player.PlayerLocation, MapSave)[0]}")
 
     print(DisplayMap(player.PlayerLocation, MapSave))
+    print(f"Health: {player.Player_Health}/{player.Player_Max_Health}")
