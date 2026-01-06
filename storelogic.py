@@ -1,4 +1,48 @@
 import json
+import csv
+
+from inventory_manager import Inventory
+
+class Store: #This class defines the store and its items for sale
+    def __init__(self):
+        self.items_for_sale = {
+            "sword": 30,
+            "axe": 20,
+            "dagger": 10
+        }
+
+def buy_menu(store, inventory): #starts the function for the buy menu
+    pouch = load_pouch() #loads the treasure pouch data
+    print("\n=== Weapon Shop ===") 
+    print(f"Coins: {pouch['coins']}\n")
+
+    for item, price in store.items_for_sale.items(): #this loop goes through each item in the stores items for sale
+        print(f"- {item}: {price} coins") #prints each item and its price
+
+    print("\nType the item name to buy it, or type 'back' to return.") 
+    choice = input("> ") #lets the user input their choice
+
+    if choice == "back": #lets the user return to the main menu
+        return
+
+    price = store.items_for_sale.get(choice) #gets the price of the chosen item
+    if price is None: #if the item is not found in the stores items for sale you get an error message
+        print("Item not sold here.")
+        return
+
+    if pouch["coins"] < price: #if the user doesnt have enough coins, you get an error message
+        print("You do not have enough coins.")
+        return
+
+    if inventory.is_full(): #uses the function from inventory_manager to check if the inventory is full
+        print("Your inventory is full.")
+        return
+
+    inventory.add_item(choice) #uses the function from inventory_manager to add the item to the inventory
+    pouch["coins"] -= price
+    save_pouch(pouch) #saves the users new coin balance
+
+    print(f"You bought a {choice} for {price} coins.")
 
 def load_pouch(): #This function loads the treasure pouch from a JSON file
     with open("treasure_pouch.json", "r") as file:
@@ -37,3 +81,22 @@ def sell_treasure(): #This is the main function to sell treasure items
 
     print(f"\nTotal coins earned: {total_coins_earned}") #This prints the total coins earned from the transaction
     print(f"Coins owned: {pouch['coins']}") #This prints the total coins owned after the transaction
+
+def shop_main_menu(store, inventory): #This provides the meny for the user to interact with the shop
+    while True:
+        print("\n=== Welcome to my store ===")
+        print("1. Buy weapons")
+        print("2. Sell treasure")
+        print("3. Leave")
+
+        choice = input("> ")
+
+        if choice == "1": #this runs the functions in my code depending on the users choice
+            buy_menu(store, inventory) 
+        elif choice == "2":
+            sell_treasure()
+        elif choice == "3":
+            print("You leave the shop.")
+            break
+        else:
+            print("Invalid choice.")
