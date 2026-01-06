@@ -27,8 +27,20 @@ for Npc_name, Npc_info in NpcData.items():
 
 print(DisplayMap(player.PlayerLocation, MapSave))
 
+with open("WinCondition.json", "r") as WinCondition_file:
+    WinCondition = json.load(WinCondition_file)
+
 
 while True:
+    for NameNpcs in Npcs:
+        if NameNpcs.Npc_Alive == False:
+            MapSave[NameNpcs.NpcPosition[0]][
+                NameNpcs.NpcPosition[1]
+            ] = NameNpcs.RoomType
+            if NameNpcs.name == WinCondition["Winning_Npc"]:
+                print(WinCondition["Winning_Message"])
+                exit()
+
     Used_door = False
     command = input("\n")
     player.Move(command, MapSave)
