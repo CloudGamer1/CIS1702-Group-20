@@ -151,6 +151,3 @@ def shop_main_menu(
             break
         else:
             print("Invalid choice.")
-
-
-shop_main_menu(Store(), Inventory())
