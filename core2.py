@@ -60,8 +60,13 @@ while Game ==True:
         
     command = input("\n")
     player.Move(MapSave, command)
+
     for ai in Npcs:
         ai.MoveNpc(MapSave, player.PlayerLocation)
+
+        # -------- FIX: NPC TAKES DAMAGE WHEN PLAYER COLLIDES --------
+        if ai.NpcPosition == player.PlayerLocation and ai.Npc_Alive:
+            ai.DamageNpc(10)
 
     if MapSave[player.PlayerLocation[0]][player.PlayerLocation[1]][:4].lower() == "door":
         player.PlayerLocation = UseDoor(player.PlayerLocation, MapSave, DoorData, command, NpcLocations)
