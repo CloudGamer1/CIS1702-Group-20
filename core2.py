@@ -1,6 +1,23 @@
+from inventory_manager import *
+from storelogic import *
 from MapLogic import *
 from PlayerLogic import *
 from NpcLogic import *
+def show_help():
+    print("""
+=== HELP MENU ===
+Commands:
+- w         : moves up
+- s         : moves down
+- a         : moves left
+- d         : moves right
+- inventory : opens inventory
+- store     : accesses store
+=================
+""")
+
+
+
 
 MapSave = LoadMap("Game-Map.csv")
 player = Player()
@@ -59,6 +76,14 @@ while Game ==True:
         exit()
         
     command = input("\n")
+    if command == "help":
+        show_help()
+    elif command=="store":
+        shop_main_menu()
+    else:
+        print("Unknown command. Type 'help' for a list of commands.")
+
+
     player.Move(MapSave, command)
 
     for ai in Npcs:
